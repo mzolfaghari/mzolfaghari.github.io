@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/testing/static/css/main.883b380a.chunk.css",
+    "main.js": "/testing/static/js/main.783cf6ce.chunk.js",
+    "main.js.map": "/testing/static/js/main.783cf6ce.chunk.js.map",
+    "runtime-main.js": "/testing/static/js/runtime-main.fd07013c.js",
+    "runtime-main.js.map": "/testing/static/js/runtime-main.fd07013c.js.map",
+    "static/js/2.0444f20d.chunk.js": "/testing/static/js/2.0444f20d.chunk.js",
+    "static/js/2.0444f20d.chunk.js.map": "/testing/static/js/2.0444f20d.chunk.js.map",
+    "static/js/3.93a3cf11.chunk.js": "/testing/static/js/3.93a3cf11.chunk.js",
+    "static/js/3.93a3cf11.chunk.js.map": "/testing/static/js/3.93a3cf11.chunk.js.map",
+    "index.html": "/testing/index.html",
+    "static/css/main.883b380a.chunk.css.map": "/testing/static/css/main.883b380a.chunk.css.map",
+    "static/js/2.0444f20d.chunk.js.LICENSE.txt": "/testing/static/js/2.0444f20d.chunk.js.LICENSE.txt",
+    "static/media/Bio-Img.98f8d3d4.jpg": "/testing/static/media/Bio-Img.98f8d3d4.jpg",
+    "static/media/App.css": "/testing/static/media/robots.6b76e263.jpg",
+    "static/media/checked.b0d73578.png": "/testing/static/media/checked.b0d73578.png",
+    "static/media/github.81f6de8e.png": "/testing/static/media/github.81f6de8e.png",
+    "static/media/mailto.33ce933b.webp": "/testing/static/media/mailto.33ce933b.webp",
+    "static/media/project-1.d8e05adb.jpg": "/testing/static/media/project-1.d8e05adb.jpg",
+    "static/media/project-2.6568c255.jpg": "/testing/static/media/project-2.6568c255.jpg",
+    "static/media/project-3.0cf0cd0c.jpg": "/testing/static/media/project-3.0cf0cd0c.jpg",
+    "static/media/project-4.fa2b2949.jpg": "/testing/static/media/project-4.fa2b2949.jpg",
+    "static/media/project-5.0c02995b.jpg": "/testing/static/media/project-5.0c02995b.jpg",
+    "static/media/project-6.68a307ff.jpg": "/testing/static/media/project-6.68a307ff.jpg",
+    "static/media/scholar.12e871a9.jpeg": "/testing/static/media/scholar.12e871a9.jpeg",
+    "static/media/twitter.150a0920.png": "/testing/static/media/twitter.150a0920.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fd07013c.js",
+    "static/js/2.0444f20d.chunk.js",
+    "static/css/main.883b380a.chunk.css",
+    "static/js/main.783cf6ce.chunk.js"
+  ]
+}
