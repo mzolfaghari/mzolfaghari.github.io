@@ -1,0 +1,51 @@
+/* Shared components. Each page defines: --bg --text --body --muted --faint --rule --accent --serif --sans --mono */
+
+/* ---------- Career (from "Attention") ---------- */
+.c-bar{display:flex;height:34px;border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.c-bar div{display:flex;align-items:center;padding:0 10px;font:500 11.5px/1 var(--sans);white-space:nowrap;overflow:hidden;border-right:1px solid var(--bg)}
+.c-bar .early{background:color-mix(in srgb,var(--text) 5%,var(--bg));color:var(--muted)}
+.c-bar .acad{background:color-mix(in srgb,var(--accent) 22%,var(--bg));color:var(--text)}
+.c-bar .ind{background:var(--accent);color:var(--bg)}
+.c-bar .ind.t{background:color-mix(in srgb,var(--accent) 82%,var(--text))}
+.c-bar .ind.now{background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 55%,var(--bg)));border-right:0}
+.c-axis span:nth-last-child(2){transform:translateX(-100%)}
+.c-axis{position:relative;height:20px;font:400 11.5px/1 var(--sans);color:var(--faint);margin-bottom:28px}
+.c-axis span{position:absolute;top:4px;transform:translateX(-50%)}.c-axis span:first-child{transform:none}.c-axis span:last-child{transform:translateX(-100%)}
+.c-list{border-top:1px solid var(--text)}
+.c-row{display:grid;grid-template-columns:120px 1fr;gap:24px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.c-row .w{font:400 14px/1.6 var(--sans);color:var(--faint);font-variant-numeric:tabular-nums}
+.c-row h3{font:600 17.5px/1.35 var(--serif);color:var(--text);margin:0}
+.c-row h3 span{font-weight:400;font-style:italic;color:var(--muted)}
+.c-row p{font-size:15px;color:var(--muted);margin:2px 0 0}
+
+/* ---------- All papers (from "Shared Space") ---------- */
+.p-filters{display:flex;gap:6px;flex-wrap:wrap}
+.p-filters button{font:500 13px/1 var(--sans);padding:8px 13px;border:1px solid var(--rule);border-radius:999px;background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+.p-filters button:hover{border-color:var(--faint)}
+.p-filters button[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.p-yr{display:grid;grid-template-columns:120px 1fr;gap:24px;border-top:1px solid var(--rule)}
+.p-yr:first-child{border-top:1px solid var(--text)}
+.p-yr>h3{font:400 22px/1 var(--serif);color:var(--faint);padding-top:20px;margin:0}
+.p-it{padding:16px 0;border-bottom:1px solid var(--rule)}.p-it:last-child{border:0}
+.p-it .pt{font:500 17.5px/1.35 var(--serif);color:var(--text);text-decoration:none}
+.p-it a.pt:hover{color:var(--accent)}
+.p-it p{font-size:14px;color:var(--muted);margin:3px 0 0}.p-it p b{color:var(--text);font-weight:600}
+.p-it .vn{font-size:13px;color:var(--faint)}.p-it .vn a{color:var(--accent);margin-left:10px;text-decoration:none}
+[hidden]{display:none!important}
+
+/* ---------- Animation frames ---------- */
+.anim{position:relative;margin:0}
+.anim .stage{position:relative;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--bg)}
+.anim canvas{display:block;width:100%}
+.anim figcaption{font:400 12.5px/1.5 var(--sans);color:var(--muted);margin-top:8px}
+.anim figcaption b{color:var(--text);font-weight:500}
+.anim.dark .stage{background:#0B0C0E;border-color:#0B0C0E}
+.anim .hud{position:absolute;left:10px;right:10px;top:8px;display:flex;justify-content:space-between;font:400 10.5px/1 var(--mono);color:#8D8C89;pointer-events:none;z-index:2}
+.anim .hud b{color:#E7A462;font-weight:500}
+.anim .prm{position:absolute;left:10px;right:10px;bottom:8px;font:400 11px/1.35 var(--mono);color:#CFCCC6;pointer-events:none;z-index:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.anim .prm span{color:#6F6E6B}
+.anim.dark .stage::before,.anim.dark .stage::after{content:"";position:absolute;left:0;right:0;height:30px;z-index:1;pointer-events:none}
+.anim.dark .stage::before{top:0;background:linear-gradient(#0B0C0E 30%,transparent)}
+.anim.dark .stage::after{bottom:0;background:linear-gradient(transparent,#0B0C0E 70%)}
+
+@media (max-width:640px){.c-row,.p-yr{grid-template-columns:1fr;gap:4px}.p-yr>h3{padding-top:16px}.c-bar div{font-size:0}}
