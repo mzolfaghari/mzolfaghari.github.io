@@ -176,14 +176,14 @@ a{color:inherit;text-decoration:none}p{margin:0}h1,h2,h3{margin:0;font-weight:50
 <body>
 <nav class="nav"><div class="wrap">
   <a class="nm" href="#">Reza Zolfaghari</a>
-  <a class="s" href="#research">Research</a><a class="s" href="#leadership">Leadership</a><a class="s" href="#work">Selected work</a><a class="s" href="#career">Career</a><a class="s" href="#papers">Papers</a><a class="s" href="#awards">Awards</a><a class="s" href="#talks">Talks</a>
+  <a class="s" href="#research">Research</a><a class="s" href="#leadership">Teams</a><a class="s" href="#work">Selected work</a><a class="s" href="#career">Career</a><a class="s" href="#papers">Papers</a><a class="s" href="#awards">Awards</a><a class="s" href="#talks">Talks</a>
 </div></nav>
 
 <header class="wrap hero">
   <div>
     <h1>Reza Zolfaghari</h1>
-    <p class="hl">I build AI systems that <em>understand</em> and <em>generate</em> video, images and sound.</p>
-    <p class="bio">I am Tech Lead and Principal Scientist for multimodal AI at Huawei, where I lead research on understanding and generating video, images and music. Before Huawei, I co-led work on on-device vision-language models at Tether AI and was Head of AI/ML and CTO at Zebracat, where my team trained and deployed video diffusion models. Earlier, I was an Applied Scientist at Amazon. I received my PhD from the University of Freiburg, advised by <a href="https://scholar.google.com/citations?user=0VAe-TQAAAAJ&amp;hl=en">Prof. Thomas Brox</a>.</p>
+    <p class="hl">Multimodal learning: understanding and generating video, images and sound.</p>
+    <p class="bio">I am a Tech Lead and Principal Scientist at Huawei, working with a team on multimodal AI for video, images and music. Before that, I worked on on-device vision-language models at Tether AI, and on video generation at Zebracat, where I was Head of AI/ML and CTO. I was previously an Applied Scientist at Amazon, and did my PhD at the University of Freiburg with <a href="https://scholar.google.com/citations?user=0VAe-TQAAAAJ&amp;hl=en">Prof. Thomas Brox</a>.</p>
     
   </div>
   <figure class="photo"><img src="assets/img/reza.jpg" alt="Reza Zolfaghari">
@@ -206,7 +206,7 @@ a{color:inherit;text-decoration:none}p{margin:0}h1,h2,h3{margin:0;font-weight:50
 </div></section>
 
 <section class="sec" id="leadership"><div class="wrap">
-  <div class="sh"><p class="lbl">Leadership</p><h2>Research leadership</h2><p>Teams I have led and what we built.</p></div>
+  <div class="sh"><p class="lbl">Teams</p><h2>Teams and roles</h2><p>The teams I have worked with and what we did together.</p></div>
   <div class="lgrid" id="lt"></div>
 </div></section>
 
@@ -263,10 +263,10 @@ a{color:inherit;text-decoration:none}p{margin:0}h1,h2,h3{margin:0;font-weight:50
 <script>
 const S = SITE, P = id => S.pubs.find(p => p.id === id);
 const LEAD = [
-  { org: "Huawei", when: "2026 –", role: "Tech Lead & Principal Scientist, Multimodal AI", pts: ["Building a team of research scientists and ML engineers", "Setting research direction for video, image and music models", "Working with product teams to bring these models into Huawei services"] },
-  { org: "Tether AI", when: "2026", role: "Co-lead & Principal ML Scientist", pts: ["Co-led a team of eight engineers and researchers", "Released VisionPsy-Nano, a small vision-language model that runs on devices", "Introduced failure analysis, data distillation and model merging into training"] },
-  { org: "Zebracat AI", when: "2021 – 2025", role: "Head of AI/ML & CTO", pts: ["Built and led an AI and engineering team of twelve", "Trained video diffusion models on more than fifty million videos", "Took generation into production and reduced inference cost by more than half"] },
-  { org: "Freiburg & AWS", when: "2016 – 2021", role: "Research Scientist · Applied Scientist", pts: ["Supervised more than eight PhD and MSc students", "Led research on video–text retrieval at Amazon", "Published at NeurIPS, ICCV and ECCV"] },
+  { org: "Huawei", when: "2026 –", role: "Tech Lead & Principal Scientist, Multimodal AI", pts: ["Working with a team of research scientists and ML engineers", "Research on video, image and music models", "Collaboration with product teams across Huawei"] },
+  { org: "Tether AI", when: "2026", role: "Co-lead & Principal ML Scientist", pts: ["Co-led a team of eight engineers and researchers", "We released VisionPsy-Nano, a small vision-language model for devices", "Work on failure analysis, data distillation and model merging"] },
+  { org: "Zebracat AI", when: "2021 – 2025", role: "Head of AI/ML & CTO", pts: ["Led an AI and engineering team of twelve", "We trained video diffusion models on large video collections", "We brought video generation into production and worked on making it efficient"] },
+  { org: "Freiburg & AWS", when: "2016 – 2021", role: "Research Scientist · Applied Scientist", pts: ["Supervised PhD and MSc students in Freiburg", "Research on video–text retrieval at Amazon", "Papers at NeurIPS, ICCV and ECCV with colleagues"] },
 ];
 lt.innerHTML = LEAD.map(l => `<article class="lc"><p class="w">${l.when}</p><h3>${l.org}</h3><p class="r">${l.role}</p><ul>${l.pts.map(x => `<li>${x}</li>`).join("")}</ul></article>`).join("");
 const ref = id => { const p = P(id); return `<a href="${p.url}">${p.short}</a> <span>${p.venue} ${p.year}</span>`; };
