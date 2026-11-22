@@ -33,8 +33,8 @@ window.SITE = {
 
   roles: [
     { from: 2026, to: null, when: "2026 –", org: "Huawei", title: "Tech Lead & Principal Scientist, Multimodal AI", text: "Research on understanding and generating video, images and music.", kind: "ind" },
-    { from: 2026, to: 2026, when: "2026", org: "Tether AI", title: "Co-lead & Principal ML Scientist", text: "Co-led a team of eight working on vision-language models that run on devices.", kind: "ind" },
-    { from: 2021, to: 2025, when: "2021 – 2025", org: "Zebracat AI", title: "Head of AI/ML & CTO", text: "Led the AI team; we trained and deployed video diffusion and video–text models.", kind: "ind" },
+    { from: 2026, to: 2026, when: "2026", org: "Tether AI", title: "Co-lead & Principal ML Scientist", text: "Co-led a team of eight on multimodal AI, including on-device vision-language models and video generation.", kind: "ind" },
+    { from: 2021, to: 2025, when: "2021 – 2025", org: "Zebracat AI", title: "Head of AI/ML & CTO", text: "Led the AI team working on video generation, multimodal video understanding and agentic content pipelines, from research to production.", kind: "ind" },
     { from: 2020, to: 2021, when: "2020 – 2021", org: "Amazon Web Services", title: "Applied Scientist", text: "Worked on video–text retrieval and contributed video models to GluonCV.", kind: "ind" },
     { from: 2016, to: 2020, when: "2016 – 2020", org: "University of Freiburg", title: "PhD, Multimodal AI · Research Scientist", text: "Research on multimodal video understanding, advised by <a href='https://scholar.google.com/citations?user=0VAe-TQAAAAJ&amp;hl=en'>Prof. Thomas Brox</a>. Supervised several PhD and MSc students.", kind: "acad" },
     { from: 2009, to: 2015, when: "2009 – 2015", org: "Earlier", title: "Research and engineering", text: "Machine learning roles at Sharif University of Technology, DarViz, Niroo Research Institute and CRCIS.", kind: "early" },

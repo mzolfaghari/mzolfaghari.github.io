@@ -183,7 +183,7 @@ a{color:inherit;text-decoration:none}p{margin:0}h1,h2,h3{margin:0;font-weight:50
   <div>
     <h1>Reza Zolfaghari</h1>
     <p class="hl">Multimodal learning: understanding and generating video, images and sound.</p>
-    <p class="bio">My research centres on multimodal learning, especially video, and on bringing these models into real products. At Huawei, I work as Tech Lead and Principal Scientist with a team developing video, image and music models. Previously, I worked on on-device vision-language models at Tether AI and served as Head of AI/ML and CTO at Zebracat, where we developed video generation for production. Earlier, I was an Applied Scientist at Amazon. I completed my PhD at the University of Freiburg under the supervision of <a href="https://scholar.google.com/citations?user=0VAe-TQAAAAJ&amp;hl=en">Prof. Thomas Brox</a>.</p>
+    <p class="bio">My research centres on multimodal learning, especially video, and on bringing these models into real products. At Huawei, I work as Tech Lead and Principal Scientist with a team developing video, image and music models. Previously, at Tether AI, I worked on multimodal models, from on-device vision-language models to video generation. As Head of AI/ML and CTO at Zebracat, I led work on video generation, multimodal video understanding and agentic content pipelines in production. Earlier, I was an Applied Scientist at Amazon. I completed my PhD at the University of Freiburg under the supervision of <a href="https://scholar.google.com/citations?user=0VAe-TQAAAAJ&amp;hl=en">Prof. Thomas Brox</a>.</p>
     
   </div>
   <figure class="photo"><img src="assets/img/reza.jpg" alt="Reza Zolfaghari">
@@ -264,17 +264,17 @@ a{color:inherit;text-decoration:none}p{margin:0}h1,h2,h3{margin:0;font-weight:50
 const S = SITE, P = id => S.pubs.find(p => p.id === id);
 const LEAD = [
   { org: "Huawei", when: "2026 –", role: "Tech Lead & Principal Scientist, Multimodal AI", pts: ["Working with a team of research scientists and ML engineers", "Research on video, image and music models", "Collaboration with product teams across Huawei"] },
-  { org: "Tether AI", when: "2026", role: "Co-lead & Principal ML Scientist", pts: ["Co-led a team of eight engineers and researchers", "We released VisionPsy-Nano, a small vision-language model for devices", "Work on failure analysis, data distillation and model merging"] },
-  { org: "Zebracat AI", when: "2021 – 2025", role: "Head of AI/ML & CTO", pts: ["Led an AI and engineering team of twelve", "We trained video diffusion models on large video collections", "We brought video generation into production and worked on making it efficient"] },
+  { org: "Tether AI", when: "2026", role: "Co-lead & Principal ML Scientist", pts: ["Co-led a team of eight engineers and researchers", "Multimodal models, from on-device vision-language models to video generation", "We released VisionPsy-Nano, a small vision-language model for devices"] },
+  { org: "Zebracat AI", when: "2021 – 2025", role: "Head of AI/ML & CTO", pts: ["Led an AI and engineering team of twelve", "Video generation, multimodal video understanding and agentic pipelines", "We brought these systems into production and worked on making them efficient"] },
   { org: "Freiburg & AWS", when: "2016 – 2021", role: "Research Scientist · Applied Scientist", pts: ["Supervised PhD and MSc students in Freiburg", "Research on video–text retrieval at Amazon", "Papers at NeurIPS, ICCV and ECCV with colleagues"] },
 ];
 lt.innerHTML = LEAD.map(l => `<article class="lc"><p class="w">${l.when}</p><h3>${l.org}</h3><p class="r">${l.role}</p><ul>${l.pts.map(x => `<li>${x}</li>`).join("")}</ul></article>`).join("");
 const ref = id => { const p = P(id); return `<a href="${p.url}">${p.short}</a> <span>${p.venue} ${p.year}</span>`; };
 const AREAS = [
   { n: "01", t: "Multimodal understanding", d: "Models that learn from video, audio and text together, for search, recognition and judging content quality.",
-    items: [["University of Freiburg", "2016–20", ["coot", "chained"]], ["Amazon Web Services", "2020–21", ["crossclr", "survey"]], ["Huawei", "2026–", [], "Video understanding and content evaluation"]] },
+    items: [["University of Freiburg", "2016–20", ["coot", "chained"]], ["Amazon Web Services", "2020–21", ["crossclr", "survey"]], ["Zebracat AI", "2021–25", [], "Multimodal video understanding and agentic content pipelines"], ["Huawei", "2026–", [], "Video understanding and content evaluation"]] },
   { n: "02", t: "Generative models", d: "Image and video generation, from training diffusion models at scale to keeping characters consistent across images.",
-    items: [["University of Freiburg", "2019–20", ["tsgan"]], ["Zebracat AI", "2021–25", ["storysync"], "Video diffusion models, trained and deployed in production"], ["Huawei", "2026–", [], "Visual generation"]] },
+    items: [["University of Freiburg", "2019–20", ["tsgan"]], ["Zebracat AI", "2021–25", ["storysync"], "Video diffusion models, trained and deployed in production"], ["Tether AI", "2026", [], "Video generation"], ["Huawei", "2026–", [], "Visual generation"]] },
   { n: "03", t: "Efficient and on-device models", d: "Vision-language and speech models that are small and fast enough to run on phones and edge devices.",
     items: [["University of Freiburg", "2017–18", ["eco"]], ["Zebracat AI", "2021–25", [], "Faster, cheaper inference for production models"], ["Tether AI", "2026", ["visionpsy", "cafe"]]] },
 ];
