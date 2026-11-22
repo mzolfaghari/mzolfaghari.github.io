@@ -18,10 +18,10 @@ window.SITE = {
   ],
 
   leadership: [
-    { k: "Teams", v: "Built and led research and engineering teams of up to 12 across three organisations, and now at Huawei." },
-    { k: "Scale", v: "Trained video diffusion and video-text models on 50M+ videos across H100/H200 clusters." },
-    { k: "Production", v: "Shipped a generative video platform that served 100K+ requests, and cut inference cost by 60%." },
-    { k: "Mentoring", v: "Supervised 8+ PhD and MSc students. Reviewer for CVPR, ICCV, ECCV, NeurIPS, ICLR and ICML." },
+    { k: "Teams", v: "Built and led research and engineering teams at Huawei, Tether AI and Zebracat AI." },
+    { k: "Scale", v: "Trained video diffusion and video–text models on more than fifty million videos." },
+    { k: "Production", v: "Took video generation into production and reduced inference cost by more than half." },
+    { k: "Mentoring", v: "Supervised more than eight PhD and MSc students." },
   ],
 
   news: [
@@ -32,12 +32,12 @@ window.SITE = {
   ],
 
   roles: [
-    { from: 2026, to: null, when: "2026 –", org: "Huawei", title: "Tech Lead & Principal Scientist, Multimodal AI", text: "Leading multimodal AI research for video, image and music: understanding, content evaluation and visual generation.", kind: "ind" },
-    { from: 2026, to: 2026, when: "2026", org: "Tether AI", title: "Co-lead & Principal ML Scientist", text: "On-device vision-language models; released VisionPsy-Nano-460M. Team of 8.", kind: "ind" },
-    { from: 2021, to: 2025, when: "2021 – 2025", org: "Zebracat AI", title: "Head of AI/ML & CTO", text: "Video diffusion and video-text models on 50M+ videos, in production at scale. Team of 12.", kind: "ind" },
-    { from: 2020, to: 2021, when: "2020 – 2021", org: "Amazon Web Services", title: "Applied Scientist", text: "Multimodal video-text retrieval (+15%); GluonCV video components.", kind: "ind" },
-    { from: 2016, to: 2020, when: "2016 – 2020", org: "University of Freiburg", title: "PhD, Multimodal AI · Research Scientist", text: "Multimodal video understanding with Thomas Brox. Published at NeurIPS, ICCV and ECCV; supervised 8+ students.", kind: "acad" },
-    { from: 2009, to: 2015, when: "2009 – 2015", org: "Earlier", title: "ML research & engineering", text: "Sharif University of Technology, DarViz, Niroo Research Institute, CRCIS.", kind: "early" },
+    { from: 2026, to: null, when: "2026 –", org: "Huawei", title: "Tech Lead & Principal Scientist, Multimodal AI", text: "Leading research on understanding and generating video, images and music.", kind: "ind" },
+    { from: 2026, to: 2026, when: "2026", org: "Tether AI", title: "Co-lead & Principal ML Scientist", text: "Co-led a team of eight working on vision-language models that run on devices.", kind: "ind" },
+    { from: 2021, to: 2025, when: "2021 – 2025", org: "Zebracat AI", title: "Head of AI/ML & CTO", text: "Built and led the AI team, and trained and deployed video diffusion and video–text models.", kind: "ind" },
+    { from: 2020, to: 2021, when: "2020 – 2021", org: "Amazon Web Services", title: "Applied Scientist", text: "Worked on video–text retrieval and contributed video models to GluonCV.", kind: "ind" },
+    { from: 2016, to: 2020, when: "2016 – 2020", org: "University of Freiburg", title: "PhD, Multimodal AI · Research Scientist", text: "Research on multimodal video understanding, advised by <a href='https://scholar.google.com/citations?user=0VAe-TQAAAAJ&amp;hl=en'>Prof. Thomas Brox</a>. Supervised several PhD and MSc students.", kind: "acad" },
+    { from: 2009, to: 2015, when: "2009 – 2015", org: "Earlier", title: "Research and engineering", text: "Machine learning roles at Sharif University of Technology, DarViz, Niroo Research Institute and CRCIS.", kind: "early" },
   ],
 
   education: [
@@ -51,13 +51,13 @@ window.SITE = {
       title: "VisionPsy-Nano: Improving Accuracy, Efficiency, and Reliability in On-Device Vision-Language Models",
       authors: "K. A. Hashmi, <b>M. Zolfaghari</b>, C. Park, R. Jain, N. Moratelli, P. Wei, L. Lu, T. Liu, et al.",
       venue: "arXiv", url: "https://arxiv.org/abs/2609.31746",
-      blurb: "A 460M-parameter vision-language model for phones and edge devices, trained with distillation and GRPO.",
+      blurb: "A small vision-language model designed to run on phones and edge devices.",
       links: [["Paper", "https://arxiv.org/abs/2609.31746"], ["Model", "https://huggingface.co/qvac/VisionPsy-Nano-460M"]] },
     { id: "cafe", topic: "Compact multilingual speech recognition", year: 2026, sel: true, topics: ["eff"], fig: "cafe.jpg", short: "CAFE",
       title: "CAFE: Confining Feature Distillation to Language-Routed Adapters for Compact Multilingual Automatic Speech Recognition",
       authors: "T. Liu, N. Moratelli, K. A. Hashmi, <b>M. Zolfaghari</b>, R. Jain, L. Lu, C. Park, A. Nazir",
       venue: "arXiv", url: "https://arxiv.org/abs/2610.19134",
-      blurb: "Multilingual speech recognition in 254M parameters, 2.5× smaller than its teacher.",
+      blurb: "A compact multilingual speech recognition model, much smaller than the model it learns from.",
       links: [["Paper", "https://arxiv.org/abs/2610.19134"]] },
     { id: "storysync", topic: "Subject consistency in image generation", year: 2025, sel: true, topics: ["gen"], fig: "storysync.jpg", short: "StorySync",
       title: "StorySync: Training-Free Subject Consistency in Text-to-Image Generation via Region Harmonization",
@@ -102,7 +102,7 @@ window.SITE = {
       title: "ECO: Efficient Convolutional Network for Online Video Understanding",
       authors: "<b>M. Zolfaghari</b>, K. Singh, T. Brox",
       venue: "ECCV", url: "https://openaccess.thecvf.com/content_ECCV_2018/html/Mohammadreza_Zolfaghari_ECO_Efficient_Convolutional_ECCV_2018_paper.html",
-      blurb: "A fast 2D/3D network for online video understanding, 10–80× faster than earlier methods.",
+      blurb: "An efficient network for understanding video in real time.",
       links: [["Paper", "https://openaccess.thecvf.com/content_ECCV_2018/html/Mohammadreza_Zolfaghari_ECO_Efficient_Convolutional_ECCV_2018_paper.html"], ["Code", "https://github.com/mzolfaghari/ECO-efficient-video-understanding"], ["Demo", "https://youtu.be/D17ejtecpd0"]] },
     { id: "chained", topic: "Action recognition from pose, motion and appearance", year: 2017, sel: true, topics: ["vid"], fig: "chained.jpg", short: "Chained Multi-stream",
       title: "Chained Multi-stream Networks Exploiting Pose, Motion, and Appearance for Action Classification and Detection",

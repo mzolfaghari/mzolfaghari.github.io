@@ -49,3 +49,5 @@
 .anim.dark .stage::after{bottom:0;background:linear-gradient(transparent,#0B0C0E 70%)}
 
 @media (max-width:640px){.c-row,.p-yr{grid-template-columns:1fr;gap:4px}.p-yr>h3{padding-top:16px}.c-bar div{font-size:0}}
+
+.c-row p a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
