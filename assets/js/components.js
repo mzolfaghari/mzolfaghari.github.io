@@ -173,24 +173,35 @@ function chase(canvas) {
     ["........XX...XX........", "........XX...XX........", "........XX...XX........", ".......XXX..XXX........"],
     ["........XX...XX........", ".........XX.XX.........", "........XX..XX.........", ".......XX..XX.........."],
     ["........XX...XX........", "........XX...XX........", "........XX...XX........", ".......XXX..XXX........"]];
-  // Original humanoid robot, facing right. Head and torso only; limbs are drawn as jointed segments.
-  // L antenna light, A eye, P chest light, W visor, G mid-grey panel.
+  // Original humanoid robot (head + torso; limbs are jointed segments), facing right.
+  // L antenna light, A eye, P chest lights, W visor, G mid-grey.
   const ROBOT = [
-    ".......L........",
-    ".......X........",
-    ".....XXXXXX.....",
-    "....XXXXXXXX....",
-    "....XXXWWWAX....",
-    "....XXXXXXXX....",
-    ".....XXXXXX.....",
-    "......XXXX......",
-    ".....XXXXXX.....",
-    "....XXXXXXXX....",
-    "....XXGPGGXX....",
-    "....XXGGGGXX....",
-    "....XXXXXXXX....",
-    ".....XXXXXX.....",
-    ".....XXXXXX....."];
+    "......L.......",
+    "......X.......",
+    "...XXXXXXXX...",
+    "...XWWWWWWX...",
+    "...XWWWWAAX...",
+    "...XWWWWWWX...",
+    "...XXXXXXXX...",
+    ".....XGGX.....",
+    "..XXXXXXXXXX..",
+    "..XXXXXXXXXX..",
+    "...XXGGGGXX...",
+    "...XXGPPGXX...",
+    "...XXGGGGXX...",
+    "...XXXXXXXX...",
+    "....XGGGGX....",
+    "....XXXXXX...."];
+  // Original tracked rover: camera head on a telescoping mast, display panel, manipulator arm.
+  const ROVER_HEAD = [".XXXXX.", "XXWWWXX", "XWWAAWX", "XXWWWXX", ".XXXXX."];
+  const ROVER_BODY = [
+    "..XXXXXXXXXXXXXX..",
+    ".XXXXXXXXXXXXXXXX.",
+    ".XXGGGGGGGXXDDDXX.",
+    ".XXGXGXGXGXXDDDXX.",
+    ".XXGGGGGGGXXXXXXX.",
+    ".XXXXXXXXXXXXXXXX.",
+    "..XXXXXXXXXXXXXX.."];
   const CODE = { X: 1, A: 3, S: 3, W: 7, Y: 6, L: 4, M: 5 };
   let grid = null, G = { cols: 0, rows: 0 }, sky = [];
   SITE_UTIL.animate(canvas, {
@@ -216,32 +227,55 @@ function chase(canvas) {
       // road
       for (let x = 0; x < cols; x++) { set(x, g, 1); if (((x + Math.floor(s)) % 8) < 4) set(x, g + 3, 8); }
       // cones
-      const dinoX = Math.round(cols * .6 + Math.sin(t * .7) * cols * .05), robX = Math.round(dinoX - 40 - Math.sin(t * 1.3) * 6);
-      let dj = 0, rj = 0;
+      const dinoX = Math.round(cols * .6 + Math.sin(t * .7) * cols * .05);
+      let dj = 0, rj = 0, rv = 0;
       for (let cw = Math.ceil((s - 40) / 190) * 190 + 120; cw < s + cols + 40; cw += 190) {
         const cx = cw - s; ["..O..", ".OOO.", "OWOWO".replace(/W/g, "O"), "OOOOO"].forEach((r, y) => { for (let x = 0; x < 5; x++) if (r[x] === "O") set(cx + x, g - 4 + y, y === 2 ? 7 : 9); });
         const dd = (cx + 2) - (dinoX + 11); if (Math.abs(dd) < 13) dj = Math.max(dj, Math.round(10 * (1 - (dd / 13) ** 2)));
-        const rd = (cx + 2) - (robX + 9); if (Math.abs(rd) < 12) rj = Math.max(rj, Math.round(8 * (1 - (rd / 12) ** 2)));
+        const hX = Math.round(dinoX - 34 - Math.sin(t * 1.3) * 4), vX = Math.round(hX - 30 - Math.sin(t * 1.1) * 5);
+        const rd = (cx + 2) - (hX + 7); if (Math.abs(rd) < 12) rj = Math.max(rj, Math.round(8 * (1 - (rd / 12) ** 2)));
+        if (Math.abs((cx + 2) - (vX + 9)) < 7) rv = 2;
       }
-      // humanoid robot: jointed run cycle, swinging arms, jumps the cones
+      // two robots chase the dinosaur: a humanoid with a stepped, servo-like gait, and a tracked rover
       const RC = { X: 1, W: 7, A: 3, G: 13 };
-      const phi = t * Math.PI * 2 * 2.1;
-      const rbob = Math.round(-Math.abs(Math.cos(phi)));
-      const ry = g - 24 - rj + rbob;
-      const seg = (x0, y0, x1, y1, c) => { const n = Math.ceil(Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)) * 2) + 1;
-        for (let i = 0; i <= n; i++) { const x = Math.round(x0 + (x1 - x0) * i / n), y = Math.round(y0 + (y1 - y0) * i / n); set(robX + x, ry + y, c); set(robX + x + 1, ry + y, c); } };
-      const leg = (ph, c) => { const th = .55 * Math.sin(ph), bend = 1.05 * Math.max(0, Math.cos(ph)), hx = 6.5, hy = 15;
+      const humX = Math.round(dinoX - 34 - Math.sin(t * 1.3) * 4), rovX = Math.round(humX - 30 - Math.sin(t * 1.1) * 5);
+      // -- humanoid
+      const stepA = Math.PI / 4, phi = Math.floor(t * Math.PI * 2 * 2 / stepA) * stepA;    // 8 discrete poses per stride
+      const hb = Math.floor(phi / stepA) % 2 ? -1 : 0;
+      const ry = g - 25 - rj + hb;
+      const seg = (ox, oy, x0, y0, x1, y1, c) => { const n = Math.ceil(Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)) * 2) + 1;
+        for (let i = 0; i <= n; i++) { const x = Math.round(x0 + (x1 - x0) * i / n), y = Math.round(y0 + (y1 - y0) * i / n); set(ox + x, oy + y, c); set(ox + x + 1, oy + y, c); } };
+      const leg = (ph, c) => { const th = .5 * Math.sin(ph), bend = .9 * Math.max(0, Math.cos(ph)), hx = 6, hy = 16;
         const kx = hx + 4 * Math.sin(th), ky = hy + 4 * Math.cos(th), sh = th - bend, ax = kx + 4 * Math.sin(sh), ay = ky + 4 * Math.cos(sh);
-        seg(hx, hy, kx, ky, c); seg(kx, ky, ax, ay, c); set(robX + Math.round(ax) + 2, ry + Math.round(ay), c); set(robX + Math.round(ax) + 3, ry + Math.round(ay), c); };
-      const arm = (ph, c) => { const al = -.8 * Math.sin(ph), sx = 6.5, sy = 9, ex = sx + 3 * Math.sin(al), ey = sy + 3 * Math.cos(al), fa = al + 1.2;
-        seg(sx, sy, ex, ey, c); seg(ex, ey, ex + 3 * Math.sin(fa), ey + 3 * Math.cos(fa), c); };
+        seg(humX, ry, hx, hy, kx, ky, c); seg(humX, ry, kx, ky, ax, ay, c);
+        for (let f = 0; f < 4; f++) set(humX + Math.round(ax) + f, ry + Math.round(ay), c);
+        set(humX + Math.round(kx), ry + Math.round(ky), c === 1 ? 13 : 1); };
+      const arm = (ph, c) => { const al = -.7 * Math.sin(ph), sx = 6, sy = 9, ex = sx + 3 * Math.sin(al), ey = sy + 3 * Math.cos(al), fa = al + 1.1;
+        seg(humX, ry, sx, sy, ex, ey, c); seg(humX, ry, ex, ey, ex + 3 * Math.sin(fa), ey + 3 * Math.cos(fa), c);
+        set(humX + Math.round(ex), ry + Math.round(ey), c === 13 ? 1 : 13); };
       arm(phi + Math.PI, 13); leg(phi + Math.PI, 13);
       ROBOT.forEach((row, y) => { for (let x = 0; x < row.length; x++) { const ch = row[x]; let c = RC[ch];
         if (ch === "L") c = Math.floor(t * 3) % 2 ? 3 : 13;
-        if (ch === "P") c = Math.sin(t * 4) > 0 ? 3 : 13;
-        if (c) set(robX + x, ry + y, c); } });
+        if (ch === "P") c = (x + Math.floor(t * 4)) % 2 ? 3 : 13;
+        if (c) set(humX + x, ry + y, c); } });
       leg(phi, 1); arm(phi, 13);
-      if (!rj && Math.sin(phi) > .7) for (let i = 0; i < 3; i++) if (hash(i, Math.floor(t * 12), 4) < .6) set(robX + 3 - i * 2, g - 1 - (i % 2), 2);
+      // -- rover
+      const rb = (Math.floor(t * 9) % 3 === 0 ? -1 : 0) - rv;
+      const bt = g - 10 + rb, mast = 3 + Math.round(2 * Math.sin(t * 1.6));
+      ROVER_BODY.forEach((row, y) => { for (let x = 0; x < row.length; x++) { const ch = row[x]; let c = RC[ch];
+        if (ch === "D") c = ((x + y + Math.floor(t * 6)) % 3 === 0) ? 3 : 13;
+        if (c) set(rovX + x, bt + y, c); } });
+      for (let m = 1; m <= mast; m++) { set(rovX + 8, bt - m, 13); set(rovX + 9, bt - m, 13); }
+      const hy0 = bt - mast - 5, look = Math.sin(t * .9) > .6 ? -1 : 0;
+      ROVER_HEAD.forEach((row, y) => { for (let x = 0; x < row.length; x++) { const c = RC[row[x]]; if (c) set(rovX + 6 + x + look, hy0 + y, c); } });
+      const tp = ((Math.floor(t * 14) % 4) + 4) % 4;
+      for (let x = 1; x <= 17; x++) { set(rovX + x, g - 3, 1); set(rovX + x, g - 1, 1); }
+      for (let x = 0; x <= 18; x++) set(rovX + x, g - 2, (x > 0 && x < 18 && (x + tp) % 4 === 0) ? 13 : 1);
+      const ay2 = bt + 3, open = Math.floor(t * 2.5) % 2;
+      for (let x = 18; x <= 20; x++) set(rovX + x, ay2, 1);
+      set(rovX + 21, ay2 - 1, 1); set(rovX + 22, ay2 - 1, 1);
+      if (open) { set(rovX + 23, ay2 - 2, 1); set(rovX + 23, ay2, 1); } else { set(rovX + 23, ay2 - 1, 1); }
+      for (let i = 0; i < 4; i++) if (hash(i, Math.floor(t * 12), 3) < .5) set(rovX - 1 - i * 2, g - 2 - (i % 2), 2);
       // dino: 4-frame run cycle, body rbob, tucked legs in the air
       const fr = ((Math.floor(t * 10) % 4) + 4) % 4, bob = (fr % 2) ? -1 : 0, dy = g - 17 - dj + (dj ? 0 : bob);
       sprite(DBODY, dinoX, dy);
