@@ -173,17 +173,26 @@ function chase(canvas) {
     ["........XX...XX........", "........XX...XX........", "........XX...XX........", ".......XXX..XXX........"],
     ["........XX...XX........", ".........XX.XX.........", "........XX..XX.........", ".......XX..XX.........."],
     ["........XX...XX........", "........XX...XX........", "........XX...XX........", ".......XXX..XXX........"]];
-  const CAR = [
-    "............LL..MM............",
-    "..........XXXXXXXXXX..........",
-    ".........XWWWWWXWWWWWX........",
-    "........XWWWWWWXWWWWWWX.......",
-    "..XXXXXXXXXXXXXXXXXXXXXXXXX...",
-    ".XXXXXXXXXXXXXXXXXXXXXXXXXXYY.",
-    ".XSSSSSSSSSSSSSSSSSSSSSSSSSXX.",
-    ".XXXXXXXXXXXXXXXXXXXXXXXXXXXX.",
-    "..XXXXXXXXXXXXXXXXXXXXXXXXXX.."];
-  const WHEEL = [[".X.", "XXX", ".X."], ["X.X", ".X.", "X.X"]];
+  // Original robot, facing right. L antenna light, A eye, P chest light, G mid-grey panels.
+  const ROBOT = [
+    "..........L.............",
+    "..........X.............",
+    "......XXXXXXXXX.........",
+    ".....XXXXXXXXXXX........",
+    ".....XXWWWWWWWXX........",
+    ".....XXWWWWWAAWX........",
+    ".....XXWWWWWWWXX........",
+    ".....XXXXXXXXXXX........",
+    "......XXXXXXXXX.........",
+    "........XXXXX...........",
+    ".....XXXXXXXXXXX........",
+    "....XXXXXXXXXXXXX.......",
+    "....XXGGGGGGGXXXX.......",
+    "....XXGPGGGGGXXXX.......",
+    "....XXGGGGGGGXXXX.......",
+    "....XXXXXXXXXXXXX.......",
+    ".....XXXXXXXXXXX........",
+    "......X.......X........."];
   const CODE = { X: 1, A: 3, S: 3, W: 7, Y: 6, L: 4, M: 5 };
   let grid = null, G = { cols: 0, rows: 0 }, sky = [];
   SITE_UTIL.animate(canvas, {
@@ -209,26 +218,33 @@ function chase(canvas) {
       // road
       for (let x = 0; x < cols; x++) { set(x, g, 1); if (((x + Math.floor(s)) % 8) < 4) set(x, g + 3, 8); }
       // cones
-      const dinoX = Math.round(cols * .6 + Math.sin(t * .7) * cols * .05), carX = Math.round(dinoX - 44 - Math.sin(t * 1.3) * 6);
+      const dinoX = Math.round(cols * .6 + Math.sin(t * .7) * cols * .05), robX = Math.round(dinoX - 40 - Math.sin(t * 1.3) * 6);
       let dj = 0, cj = 0;
       for (let cw = Math.ceil((s - 40) / 190) * 190 + 120; cw < s + cols + 40; cw += 190) {
         const cx = cw - s; ["..O..", ".OOO.", "OWOWO".replace(/W/g, "O"), "OOOOO"].forEach((r, y) => { for (let x = 0; x < 5; x++) if (r[x] === "O") set(cx + x, g - 4 + y, y === 2 ? 7 : 9); });
         const dd = (cx + 2) - (dinoX + 11); if (Math.abs(dd) < 13) dj = Math.max(dj, Math.round(10 * (1 - (dd / 13) ** 2)));
-        const cd = (cx + 2) - (carX + 15); if (Math.abs(cd) < 5) cj = 1;
+        const cd = (cx + 2) - (robX + 11); if (Math.abs(cd) < 6) cj = 1;
       }
-      // car
-      const bump = cj + (Math.floor(t * 10) % 2 ? 0 : 0);
-      const cy = g - 12 - bump;
-      sprite(CAR, carX, cy);
-      const wf = WHEEL[Math.floor(t * 12) % 2];
-      [6, 21].forEach(wx => wf.forEach((r, y) => { for (let x = 0; x < 3; x++) if (r[x] === "X") set(carX + wx + x, cy + 9 + y, 1); }));
-      const siren = Math.floor(t * 5) % 2;
-      if (!siren) { set(carX + 12, cy, 0); set(carX + 13, cy, 0); for (let i = -2; i < 4; i++) set(carX + 16 + i, cy - 1, 11); }
-      else { set(carX + 16, cy, 0); set(carX + 17, cy, 0); for (let i = -2; i < 4; i++) set(carX + 12 + i, cy - 1, 10); }
-      for (let i = 1; i < 10; i++) for (let y = -Math.floor(i / 3); y <= Math.floor(i / 3); y++) set(carX + 29 + i, cy + 5 + y, 12);
-      // dust
-      for (let i = 0; i < 6; i++) if (hash(i, Math.floor(t * 12), 3) < .55) set(carX - 1 - i * 2, g - 1 - Math.floor(hash(i, t | 0, 5) * 3), 2);
-      // dino: 4-frame run cycle, body bob, tucked legs in the air
+      // robot: bobbing body, rolling treads, reaching arm with a claw
+      const rf = Math.floor(t * 8) % 2, rbob = rf ? -1 : 0, ry = g - 21 - cj;
+      const RC = { X: 1, W: 7, A: 3, G: 13 };
+      ROBOT.forEach((row, y) => { for (let x = 0; x < row.length; x++) { const ch = row[x]; let c = RC[ch];
+        if (ch === "L") c = Math.floor(t * 3) % 2 ? 3 : 13;
+        if (ch === "P") c = Math.sin(t * 4) > 0 ? 3 : 13;
+        if (c) set(robX + x, ry + y + rbob, c); } });
+      const tp = ((Math.floor(t * 14) % 3) + 3) % 3;
+      for (let x = 3; x <= 19; x++) { set(robX + x, ry + 18, 1); set(robX + x, ry + 20, 1); }
+      for (let x = 2; x <= 20; x++) set(robX + x, ry + 19, (x > 2 && x < 20 && (x + tp) % 3 === 0) ? 13 : 1);
+      set(robX + 2, ry + 18, 13); set(robX + 20, ry + 18, 13); set(robX + 2, ry + 20, 13); set(robX + 20, ry + 20, 13);
+      const ay = ry + 12 + rbob;
+      for (let x = 17; x <= 21; x++) set(robX + x, ay, 1);
+      set(robX + 17, ay - 1, 1);
+      if (Math.floor(t * 3) % 2) { set(robX + 22, ay - 1, 1); set(robX + 23, ay - 2, 1); set(robX + 22, ay + 1, 1); set(robX + 23, ay + 2, 1); }
+      else { set(robX + 22, ay - 1, 1); set(robX + 23, ay, 1); set(robX + 22, ay + 1, 1); }
+      (rf ? [[3, 12], [2, 13], [2, 14], [1, 15]] : [[3, 12], [3, 13], [2, 14], [2, 15]]).forEach(([x, y]) => set(robX + x, ry + y + rbob, 13));
+      // exhaust behind the robot
+      for (let i = 0; i < 4; i++) if (hash(i, Math.floor(t * 12), 3) < .5) set(robX - 1 - i * 2, ry + 15 + rbob - (i % 2), 2);
+      // dino: 4-frame run cycle, body rbob, tucked legs in the air
       const fr = ((Math.floor(t * 10) % 4) + 4) % 4, bob = (fr % 2) ? -1 : 0, dy = g - 17 - dj + (dj ? 0 : bob);
       sprite(DBODY, dinoX, dy);
       sprite(DLEGS[dj ? 1 : fr], dinoX, dy + 13);
@@ -241,8 +257,8 @@ function chase(canvas) {
       if (p < .8) { sd = 1; ph = "noise"; } else if (p < 3.6) { sd = 1 - (p - .8) / 2.8; ph = "denoise"; } else if (p < 10.4) { sd = 0; ph = "video"; } else { sd = (p - 10.4) / 1.6; ph = "noise"; }
       const step = Math.round(sd * 50), abar = Math.cos(step / 50 * Math.PI / 2) ** 2, a = Math.sqrt(abar), b = Math.sqrt(1 - abar);
       const seed = ph === "video" ? 0 : step * 7 + (ph === "noise" ? Math.floor(t * 12) : 0);
-      const PAL = { 1: ink, 2: ink, 3: acc, 4: "#E5484D", 5: "#3B82F6", 6: "#F2B33D", 7: bg, 8: ink, 9: "#F08A24", 10: "#E5484D", 11: "#3B82F6", 12: "#F2B33D" };
-      const INT = { 1: 1, 2: .16, 3: 1, 4: 1, 5: 1, 6: 1, 7: 0, 8: .3, 9: 1, 10: .28, 11: .28, 12: .1 };
+      const PAL = { 1: ink, 2: ink, 3: acc, 4: "#E5484D", 5: "#3B82F6", 6: "#F2B33D", 7: bg, 8: ink, 9: "#F08A24", 10: "#E5484D", 11: "#3B82F6", 12: "#F2B33D", 13: ink };
+      const INT = { 1: 1, 2: .16, 3: 1, 4: 1, 5: 1, 6: 1, 7: 0, 8: .3, 9: 1, 10: .28, 11: .28, 12: .1, 13: .45 };
       ctx.clearRect(0, 0, w, h);
       for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
         const c = grid[y * cols + x], sv = c ? INT[c] : 0;
