@@ -278,9 +278,10 @@ function chase(canvas) {
       for (let i = 0; i < 4; i++) if (hash(i, Math.floor(t * 12), 3) < .5) set(rovX - 1 - i * 2, g - 2 - (i % 2), 2);
       // dino: 4-frame run cycle, body rbob, tucked legs in the air
       const fr = ((Math.floor(t * 10) % 4) + 4) % 4, bob = (fr % 2) ? -1 : 0, dy = g - 17 - dj + (dj ? 0 : bob);
-      sprite(DBODY, dinoX, dy);
-      sprite(DLEGS[dj ? 1 : fr], dinoX, dy + 13);
-      if (Math.floor(t * .6) % 5 === 0 && (t % 1.67) < .12) set(dinoX + 16, dy + 2, 1);   // blink
+      const dsprite = (sp, ox, oy) => sp.forEach((row, y) => { for (let x = 0; x < row.length; x++) { const c = { X: 16, A: 17 }[row[x]]; if (c) set(ox + x, oy + y, c); } });
+      dsprite(DBODY, dinoX, dy);
+      dsprite(DLEGS[dj ? 1 : fr], dinoX, dy + 13);
+      if (Math.floor(t * .6) % 5 === 0 && (t % 1.67) < .12) set(dinoX + 16, dy + 2, 16);   // blink
       if (!dj && hash(fr, Math.floor(t * 10), 1) < .5) set(dinoX + 5 - fr, g - 1, 2);   // kicked-up dust
 
       // diffusion schedule over the whole strip
@@ -289,8 +290,9 @@ function chase(canvas) {
       if (p < .8) { sd = 1; ph = "noise"; } else if (p < 3.6) { sd = 1 - (p - .8) / 2.8; ph = "denoise"; } else if (p < 10.4) { sd = 0; ph = "video"; } else { sd = (p - 10.4) / 1.6; ph = "noise"; }
       const step = Math.round(sd * 50), abar = Math.cos(step / 50 * Math.PI / 2) ** 2, a = Math.sqrt(abar), b = Math.sqrt(1 - abar);
       const seed = ph === "video" ? 0 : step * 7 + (ph === "noise" ? Math.floor(t * 12) : 0);
-      const PAL = { 1: ink, 2: ink, 3: acc, 4: "#E5484D", 5: "#3B82F6", 6: "#F2B33D", 7: bg, 8: ink, 9: "#F08A24", 10: "#E5484D", 11: "#3B82F6", 12: "#F2B33D", 13: ink };
-      const INT = { 1: 1, 2: .16, 3: 1, 4: 1, 5: 1, 6: 1, 7: 0, 8: .3, 9: 1, 10: .28, 11: .28, 12: .1, 13: .45 };
+      const DARK = matchMedia("(prefers-color-scheme: dark)").matches;
+      const PAL = { 1: ink, 2: ink, 3: acc, 4: "#E5484D", 5: "#3B82F6", 6: "#F2B33D", 7: bg, 8: ink, 9: "#F08A24", 10: "#E5484D", 11: "#3B82F6", 12: "#F2B33D", 13: ink, 16: DARK ? "#5FAE70" : "#2E6B3C", 17: DARK ? "#8FD39C" : "#4E9A5C" };
+      const INT = { 1: 1, 2: .16, 3: 1, 4: 1, 5: 1, 6: 1, 7: 0, 8: .3, 9: 1, 10: .28, 11: .28, 12: .1, 13: .45, 16: 1, 17: 1 };
       ctx.clearRect(0, 0, w, h);
       for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
         const c = grid[y * cols + x], sv = c ? INT[c] : 0;
